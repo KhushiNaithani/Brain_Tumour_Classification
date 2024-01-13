@@ -14,13 +14,17 @@ def predict(image):
     img_Array= tf.expand_dims(img_array,0)
     prediction=CNN.predict(img_Array)
     return prediction
+def map_prediction(prediction):
+    cl_labels = ['glioma', 'meningioma', 'notumor', 'pituitary']
+    return cl_labels[np.argmax(prediction)]
+
 
 st.title("Brain Tumour Classification")
 image_file = st.file_uploader(label="user_image_uploder",type=['jpeg','png'])
 if image_file:
     st.image(image_file)
-    output = predict(image_file)
-    st.write(output)
+    prediction_output = predict(image_file)
+    f'Class whose max ratio: {map_prediction(prediction_output)}'
 
 
 
